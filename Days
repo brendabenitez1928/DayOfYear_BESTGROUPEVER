@@ -1,0 +1,134 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+//class declaration
+class NumDays{
+private:
+    double hours;
+    double days;
+
+public:
+    //constructor
+    NumDays(double h = 0){
+        hours = h;
+        days = h/(8.00);
+    }
+
+    //getter functions
+    double getHours(){
+        return hours;
+    }
+     double getDays(){
+        return days;
+    }
+
+    //setter functions
+    void setHours(double h){
+        hours = h;
+        days = h/(8.00);
+    }
+
+    void setDays(double d){
+        days = d;
+        hours = d*(8.00);
+    }
+
+    //overload + operator
+    double operator+ (const NumDays &right){
+        return hours+right.hours;
+    }
+    //overload - operator
+    double operator- (const NumDays &right){
+        //check if subtraction will give negative value
+        if(hours < right.hours){
+            cout << "ERROR! Cannot subtract! Now terminating!\n";
+            exit(0);
+        }
+
+        return hours-right.hours;
+    }
+
+    //overload prefix ++ operator
+    NumDays operator++(){
+        //pre-increment hours member
+        ++hours;
+
+        //update days member
+        days = hours/(8.00);
+        //return modified calling object
+        return *this;
+    }
+
+    //overload postfix ++ operator
+    NumDays operator++(int){
+        //post-increment hours member
+        hours++;
+
+        //update days member
+        days = hours/(8.00);
+
+        //return modified calling object
+        return *this;
+    }
+
+    //overload prefix -- operator
+    NumDays operator--(){
+        //pre-decrement hours member
+        --hours;
+
+        //update days member
+        days = hours/(8.00);
+        //return modified calling object
+        return *this;
+    }
+
+    //overload postfix -- operator
+    NumDays operator--(int){
+        //post-decrement hours member
+        hours--;
+
+        //update days member
+        days = hours/(8.00);
+
+        //return modified calling object
+        return *this;
+    }
+
+};
+
+int main()
+{
+    //create first object
+    cout << "Creating object with 12 hours...\n";
+    NumDays obj1(12);
+    cout << obj1.getHours() << " hours = " <<obj1.getDays() << " days.\n";
+     //create second object
+    cout << "\nCreating object with 18 hours...\n";
+    NumDays obj2(18);
+    cout << obj2.getHours() << " hours = " <<obj2.getDays() << " days.\n";
+
+    //test overloaded + operator
+
+    cout << endl << "Adding hours... " << obj1 + obj2 << " hours.\n";
+
+    //test overloaded - operator
+    cout << endl << "Subtracting hours... " << obj2 - obj1 << " hours.\n\n";
+
+    //test overloaded ++ operators
+    cout << "Pre- and post-incrementing first object...\n";
+    ++obj1;
+    cout << obj1.getHours() << " hours = " <<obj1.getDays() << " days.\n";
+
+    obj1++;
+    cout << obj1.getHours() << " hours = " <<obj1.getDays() << " days.\n";
+
+    //test overloaded -- operators
+    cout << "\nPre- and post-decrementing second object...\n";
+    --obj2;
+    cout << obj2.getHours() << " hours = " <<obj2.getDays() << " days.\n";
+    obj2--;
+    cout << obj2.getHours() << " hours = " <<obj2.getDays() << " days.\n";
+
+    return 0;
+}
